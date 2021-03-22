@@ -74,12 +74,12 @@ export default class SlDropdown extends LitElement {
   /**
    * The keys that trigger the menu to focus.
    */
-  @property({type: Array}) focusKeys: string [] = [' ', 'Enter']
+  @property({ type: Array }) focusKeys: string[] = [' ', 'Enter'];
 
   /**
    * Disable this option to prevent type to select functionality
    */
-  @property({type: Boolean}) typeToSelect: boolean = true
+  @property({ type: Boolean }) typeToSelect: boolean = true;
   /** Emitted when the dropdown opens. Calling `event.preventDefault()` will prevent it from being opened. */
   @event('sl-show') slShow: EventEmitter<void>;
 
@@ -272,7 +272,7 @@ export default class SlDropdown extends LitElement {
       }
     }
 
-    if (this.typeToSelect){
+    if (this.typeToSelect) {
       // Other keys bring focus to the menu and initiate type-to-select behavior
       const ignoredKeys = ['Tab', 'Shift', 'Meta', 'Ctrl', 'Alt'];
       if (this.open && menu && !ignoredKeys.includes(event.key)) {
