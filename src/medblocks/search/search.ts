@@ -4,9 +4,9 @@ import { customElement, html, LitElement } from 'lit-element';
 export default class MbSearch extends LitElement {
   render() {
     return html`
-      <sl-dropdown>
-        <sl-button slot="trigger" caret>Dropdown</sl-button>
-        <sl-menu>
+      <sl-dropdown .focusKeys=${['Enter']} .typeToSelect=${() => {}}>
+        <sl-input slot="trigger"></sl-input>
+        <sl-menu .typeToSelect=${() => {}}>
           <sl-menu-item>Dropdown Item 1</sl-menu-item>
           <sl-menu-item>Dropdown Item 2</sl-menu-item>
           <sl-menu-item>Dropdown Item 3</sl-menu-item>
