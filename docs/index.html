@@ -1,58 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Shoelace Medblocks Demo</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" />
+    <!-- Import Shoelace -->
+    <link rel="stylesheet" href="/dist/themes/base.css" />
+    <script type="module" src="/dist/shoelace.js"></script>
+  </head>
 
-<head>
-  <meta charset="UTF-8" />
-  <title>Shoelace Medblocks Demo</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css">
-  <!-- Import Shoelace -->
-  <link rel="stylesheet" href="/dist/themes/base.css" />
-  <script type="module" src="/dist/shoelace.js"></script>
-</head>
-
-<body>
-  <section class="section" id="app">
-    <div class="container">
-      <div class="columns">
-        <div class="column is-half">
-          <h1 class="subtitle">Inside custom element</h1>
-          <mb-search></mb-search>
-        </div>
-        <div class="column">
-          <h1 class="subtitle">Directly in HTML</h1>
-          <sl-dropdown>
-            <sl-button slot="trigger" caret>Dropdown</sl-button>
-            <sl-menu>
-              <sl-menu-item>Dropdown Item 1</sl-menu-item>
-              <sl-menu-item>Dropdown Item 2</sl-menu-item>
-              <sl-menu-item>Dropdown Item 3</sl-menu-item>
-              <sl-menu-item checked>Checked</sl-menu-item>
-              <sl-menu-item disabled>Disabled</sl-menu-item>
-              <sl-menu-divider></sl-menu-divider>
-              <sl-menu-item>
-                Prefix
-                <sl-icon slot="prefix" name="gift"></sl-icon>
-              </sl-menu-item>
-              <sl-menu-item>
-                Suffix Icon
-                <sl-icon slot="suffix" name="heart"></sl-icon>
-              </sl-menu-item>
-            </sl-menu>
-          </sl-dropdown>
+  <body>
+    <section class="section" id="app">
+      <div class="container">
+        <div class="columns">
+          <div class="column is-half">
+            <h1 class="subtitle">Inside custom element</h1>
+            <mb-search></mb-search>
+          </div>
+          <div class="column">
+            <h1 class="subtitle">Directly in HTML</h1>
+            <sl-dropdown>
+              <sl-button slot="trigger" caret>Dropdown</sl-button>
+              <sl-menu>
+                <sl-menu-item>Dropdown Item 1</sl-menu-item>
+                <sl-menu-item>Dropdown Item 2</sl-menu-item>
+                <sl-menu-item>Dropdown Item 3</sl-menu-item>
+                <sl-menu-item checked>Checked</sl-menu-item>
+                <sl-menu-item disabled>Disabled</sl-menu-item>
+                <sl-menu-divider></sl-menu-divider>
+                <sl-menu-item>
+                  Prefix
+                  <sl-icon slot="prefix" name="gift"></sl-icon>
+                </sl-menu-item>
+                <sl-menu-item>
+                  Suffix Icon
+                  <sl-icon slot="suffix" name="heart"></sl-icon>
+                </sl-menu-item>
+              </sl-menu>
+            </sl-dropdown>
+          </div>
         </div>
       </div>
-    </div>
-  </section>
-  <script>
-
-  </script>
-</body>
-
+    </section>
+    <script></script>
+  </body>
 </html>
-
-
-
-
-
-
-
