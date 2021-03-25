@@ -1,4 +1,11 @@
-:host,
-sl-dropdown {
-  display: block;
+:host, sl-dropdown {
+    display: block;
+}
+  
+sl-input.pointer::part(base) {
+    cursor: default
+}
+
+.tags {
+    padding: var(--sl-spacing-xx-small) var(--sl-spacing-x-large)
 }

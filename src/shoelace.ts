@@ -45,4 +45,7 @@ export { default as SlTag } from './components/tag/tag';
 export { default as SlTextarea } from './components/textarea/textarea';
 export { default as SlTooltip } from './components/tooltip/tooltip';
 export { default as SlSearch } from './components/search/search';
+
+// Medblock exports
 export { default as MbSearch } from './medblocks/search/search';
+export { default as MbForm} from './medblocks/form/form'
