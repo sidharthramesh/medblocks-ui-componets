@@ -1,4 +1,4 @@
-import { customElement, property } from "lit-element";
+import { customElement, internalProperty, property } from "lit-element";
 import { html } from "lit-html";
 import { ifDefined } from "lit-html/directives/if-defined";
 import { watch } from "../../internal/decorators";
@@ -16,10 +16,10 @@ export default class MbSelect extends CodedTextElement {
 
     @property({ type: String, reflect: true }) placeholder: string
 
-    @property({ type: Array }) options: { code: string, label: string }[] = []
+    @internalProperty() options: MbOption[] = []
 
     getLabel(code: string) {
-        return this.options.filter(option => option.code === code)[0].label
+        return this.options.filter(option => option.value === code)[0].innerHTML
     }
 
     get optionElements(): NodeListOf<MbOption> {
@@ -34,14 +34,26 @@ export default class MbSelect extends CodedTextElement {
             this.input.emit()
         }
     }
+    connectedCallback() {
+        super.connectedCallback()
+        const observer = new MutationObserver(() => {
+            this.handleChildChange()
+        });
+        observer.observe(this, { childList: true, subtree: true });
+    }
+
+    handleChildChange() {
+        this.options = [...this.querySelectorAll('mb-option') as NodeListOf<MbOption>]
+    }
+
     render() {
         return html`
             <sl-select clearable placeholder=${this.placeholder ?? 'Please select' } label=${ifDefined(this.label)}
                 @sl-change=${this.handleInput} @sl-clear=${() => { this.data = undefined; this.input.emit() }}>
-                ${this.options.map(option => html`<sl-menu-item value=${option.code} .label=${option.label}>${option.label}
+                ${this.options.map(option => html`<sl-menu-item value=${option.value}>${option.innerHTML}
                 </sl-menu-item>`)}
             </sl-select>
-            <slot @slotchange=${()=> console.log("Slot changed", this.querySelectorAll('mb-option'))}></slot>
+            <slot @slotchange=${this.handleChildChange}></slot>
         `
     }
 }
