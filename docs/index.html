@@ -1,75 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Shoelace Medblocks Demo</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" />
-    <!-- Import Shoelace -->
-    <link rel="stylesheet" href="/dist/themes/base.css" />
-    <script type="module" src="/dist/shoelace.js"></script>
-  </head>
 
-  <body>
-    <div id="vueapp">
-      <mb-form :data.prop="composition">
-        <section class="section">
-          <div class="container">
-            <div class="columns">
-              <div class="column is-half">
-                <div class="field">
-                  <mb-search
-                    path="hello world"
-                    label="Disease"
-                    @input="disease=$event.target.data"
-                    :data.prop="disease"
-                    :filters.prop="[{name: 'Diseases', filter: '<12345'}]"
-                  >
-                  </mb-search>
-                </div>
-                <div class="field">
-                  <mb-search path="another" label="Body part"></mb-search>
-                </div>
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Shoelace Medblocks Demo</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" />
+  <!-- Import Shoelace -->
+  <link rel="stylesheet" href="/dist/themes/base.css" />
+  <script type="module" src="/dist/shoelace.js"></script>
+</head>
+
+<body>
+  <div id="vueapp">
+    <mb-form @input="handleChange" :data.prop="composition">
+      <section class="section">
+        <div class="container">
+          <div class="columns">
+            <div class="column is-half">
+              <div class="field">
+                <mb-search path="hello world" label="Disease" :filters.prop="[{name: 'Diseases', filter: '<12345'}]">
+                </mb-search>
+              </div>
+              <div class="field">
+                <mb-search path="another" label="Body part"></mb-search>
+              </div>
+              <div class="field">
+                <mb-input path="textinput" label="Please enter your name" @input="disease=$event.target.data"
+                  :data.prop="disease"></mb-input>
+              </div>
+              <div class="field">
+                <mb-select path="selectInput" label="Select something">
+                  <mb-option value="option.code">{{option.label}}</mb-option>
+                </mb-select>
               </div>
             </div>
           </div>
-        </section>
-      </mb-form>
-      <pre>
+        </div>
+      </section>
+    </mb-form>
+    <pre>
       Composition:
       {{composition}}
 
       Disease:
       {{disease}}
-    </pre
-      >
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
-    <script>
-      Vue.config.ignoredElements = [/mb-\w*/];
-      var app = new Vue({
-        el: '#vueapp',
-        data: {
-          composition: {},
-          test: 'Hello',
-          disease: {}
-        },
-        methods: {
-          handleChange(e) {
-            console.log('Change event');
-            console.log(e.target.data);
-            this.composition = e.target.data;
-            console.log(e.target);
-            console.log(document.querySelector('mb-form').data);
-          }
-        },
-        mounted() {
-          const data = document.querySelector('mb-form').data;
-          console.log(data);
-          this.composition = data;
+    </pre>
+  </div>
+  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
+  <script>
+    Vue.config.ignoredElements = [/mb-\w*/];
+    var app = new Vue({
+      el: "#vueapp",
+      data: {
+        composition: {},
+        test: "Hello",
+        disease: "",
+        option: { code: 'hello', label: 'Hello' }
+      },
+      methods: {
+        handleChange(e) {
+          this.composition = e.target.data
         }
-      });
-    </script>
-  </body>
+      },
+      mounted() {
+        const data = document.querySelector('mb-form').data
+        this.composition = data
+      }
+    })
+  </script>
+</body>
+
 </html>

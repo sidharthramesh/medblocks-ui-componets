@@ -47,5 +47,8 @@ export { default as SlTooltip } from './components/tooltip/tooltip';
 export { default as SlSearch } from './components/search/search';
 
 // Medblock exports
-export { default as MbSearch } from './medblocks/search/search';
+export { default as MbSearch } from './medblocks/codedtext/search';
+export { default as MbSelect } from './medblocks/codedtext/select'
+export { default as MbOption } from './medblocks/codedtext/option'
 export { default as MbForm } from './medblocks/form/form';
+export { default as MbInput } from './medblocks/text/input'

@@ -1,5 +1,6 @@
 import { customElement, html, LitElement, property } from 'lit-element';
 import { event, EventEmitter, watch } from '../../internal/decorators';
+import { EhrElement } from '../base/base';
 
 @customElement('mb-form')
 export default class MedblockForm extends LitElement {
@@ -13,7 +14,7 @@ export default class MedblockForm extends LitElement {
   testChanged(oldValue: any, newValue: any) {
     if (oldValue !== newValue) {
       Object.keys(this.pathElementMap).forEach(path => {
-        let element = this.pathElementMap[path] as any;
+        let element = this.pathElementMap[path] as EhrElement;
         element.data = newValue[path];
       });
     }
@@ -48,7 +49,6 @@ export default class MedblockForm extends LitElement {
   }
 
   handleInput(e: CustomEvent) {
-    // this.value = this.currentValue()
     e.stopPropagation();
     this.data = this.currentData();
     this.input.emit();

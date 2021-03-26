@@ -1,34 +1,24 @@
-import { customElement, html, LitElement, property, TemplateResult, unsafeCSS } from 'lit-element';
+import { customElement, html, property, TemplateResult, unsafeCSS } from 'lit-element';
 import { SlInput } from '../../shoelace';
 import { until } from 'lit-html/directives/until.js';
 import { classMap } from 'lit-html/directives/class-map';
 import styles from 'sass:./search.scss';
-import { event, EventEmitter, watch } from '../../internal/decorators';
+import { watch } from '../../internal/decorators';
 import { ifDefined } from 'lit-html/directives/if-defined';
+import { CodedTextElement } from './base';
 
-interface CodedText {
-  code: string;
-  display: string;
-  terminology: string;
-}
+
+
 
 @customElement('mb-search')
-export default class MbSearch extends LitElement {
+export default class MbSearch extends CodedTextElement {
   static styles = unsafeCSS(styles);
 
-  @property({ type: Object }) data: CodedText | undefined;
-
-  @property({ type: String }) label: string;
-
   @property({ type: String }) searchTerm: string;
-
-  @property({ type: String }) path: string;
 
   @property({ type: Array }) filters: { name: string; filter: string }[];
 
   @property({ type: Array }) cancelledFilters: string[] = [];
-
-  @event('input') input: EventEmitter<CodedText>;
 
   @watch('data')
   handleDataChange() {
@@ -44,7 +34,7 @@ export default class MbSearch extends LitElement {
   async getResults() {
     await new Promise(r => setTimeout(r, 500));
     return html`
-      <sl-menu-item value="option1" .label=${'Option 1'} .terminology=${'SNOMED-CT'}
+      <sl-menu-item value="option1" .label=${'Option 1'} .terminology=${this.terminology}
         >Cataract posterior subcapsular
       </sl-menu-item>
     `;
@@ -100,7 +90,7 @@ export default class MbSearch extends LitElement {
           slot="trigger"
           .label=${this.label}
           @sl-input=${this.handleInput}
-          value=${ifDefined(this.display || this.searchTerm)}
+          value=${ifDefined(this.display ?? this.searchTerm ?? '')}
           ?readonly=${this.hasValue}
           ?clearable=${this.hasValue}
           @sl-clear=${this.handleClear}
