@@ -5,11 +5,10 @@
   <meta charset="UTF-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Shoelace Medblocks Demo</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" />
-  <!-- Import Shoelace -->
+  <title>Medblocks UI Demo</title>
   <link rel="stylesheet" href="/dist/themes/base.css" />
   <script type="module" src="/dist/shoelace.js"></script>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" />
 </head>
 
 <body>
@@ -19,63 +18,26 @@
         <div class="container">
           <div class="columns">
             <div class="column is-half">
+              <h1 class="subtitle">Blood pressure Template</h1>
               <div class="field">
-                <mb-search path="hello world" label="Disease">
-                  <mb-filter filter="^12345" name="Some filter"></mb-filter>
-                  <mb-filter filter="<<234" name="Another filter" disabled></mb-filter>
-                </mb-search>
+                <mb-quantity path="blood_pressure_template/blood_pressure:0/any_event:0/systolic" default="mm[Hg]"
+                  label="Systolic">
+                  <mb-unit unit="mm[Hg]" label="mm[Hg]"></mb-unit>
+                </mb-quantity>
               </div>
               <div class="field">
-                <mb-search path="another" label="Body part"></mb-search>
+                <mb-quantity path="blood_pressure_template/blood_pressure:0/any_event:0/diastolic" default="mm[Hg]"
+                  label="Diastolic">
+                  <mb-unit unit="mm[Hg]" label="mm[Hg]"></mb-unit>
               </div>
               <div class="field">
-                <mb-input textarea path="textinput" label="Please enter your name" @input="disease=$event.target.data"
-                  :data.prop="disease"></mb-input>
-              </div>
-              <div class="field">
-                <mb-select path="selectInput" label="Select something" terminology="SNOMED-CT">
-                  <mb-option code="123" display="Hello there"></mb-option>
+                <mb-select path="blood_pressure_template/blood_pressure:0/any_event:0/position" label="Position">
+                  <mb-option code="at1000" display="Standing"></mb-option>
+                  <mb-option code="at1001" display="Sitting"></mb-option>
+                  <mb-option code="at1002" display="Reclining"></mb-option>
+                  <mb-option code="at1003" display="Lying"></mb-option>
+                  <mb-option code="at1014" display="Lying with tilt to left"></mb-option>
                 </mb-select>
-              </div>
-              <div class="field">
-                <mb-quantity label="Weight" default="kg" path="blood_pressure_template/body_weight/any_event:0/weight">
-                  <mb-unit unit="kg" label="kg"></mb-unit>
-                  <mb-unit unit="mm[H2o]" label="h2o"></mb-unit>
-                </mb-quantity>
-                <mb-quantity path="blood_pressure_template/body_weight/any_event:0/weight" default="kg" label="Weight"> 
-                  <mb-unit unit="kg" label="kg"></mb-unit>
-                  <mb-unit unit="kg" label="kg"></mb-unit>
-                  <mb-unit unit="kg" label="kg"></mb-unit>
-                  <mb-unit unit="kg" label="kg"></mb-unit>
-
-                </mb-quantity>
-              </div>
-              <div class="field">
-                <mb-buttons>
-
-                </mb-buttons>
-              </div>
-              <div class="field">
-                <mb-quantity path="blood_pressure_template/body_weight/any_event:0/weight" default="kg" label="Weight"> 
-                  <mb-unit unit="kg" label="kg"></mb-unit>
-                  <mb-unit unit="kg" label="kg"></mb-unit>
-                </mb-quantity>
-                <mb-quantity path="blood_pressure_template/body_weight/any_event:0/weight" default="kg" label="Weight"> 
-                  <mb-unit unit="kg" label="kg"></mb-unit>
-                </mb-quantity>
-              </div>
-
-              </mb-quantity>
-              <div class="field">
-                <mb-buttons multiple>
-
-                </mb-buttons>
-              </div>
-
-              <div class="field">
-                <mb-ordinal multiple>
-
-                </mb-ordinal>
               </div>
             </div>
           </div>
@@ -86,8 +48,8 @@
       Composition:
       {{composition}}
 
-      Disease:
-      {{disease}}
+      Systolic:
+      {{systolic}}
     </pre>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
@@ -97,9 +59,7 @@
       el: "#vueapp",
       data: {
         composition: {},
-        test: "Hello",
-        disease: "",
-        option: { code: 'hello', label: 'Hello' }
+        systolic: 0,
       },
       methods: {
         handleChange(e) {

@@ -6,7 +6,7 @@ import MbUnit from "./unit";
 import { SlInput, SlSelect } from '../../shoelace'
 import { ifDefined } from 'lit-html/directives/if-defined'
 
-interface Quantity { magniture?: number, unit?: string }
+interface Quantity { magnitude?: number, unit?: string }
 
 @customElement('mb-quantity')
 export default class MbQuantity extends EhrElement {
@@ -36,7 +36,7 @@ export default class MbQuantity extends EhrElement {
 
     handleInput(e: CustomEvent) {
         const input = e.target as SlInput
-        this.data = { ...this.data, magniture: parseFloat(input.value) }
+        this.data = { ...this.data, magnitude: parseFloat(input.value) }
     }
 
     handleSelect(e: CustomEvent) {
@@ -48,7 +48,7 @@ export default class MbQuantity extends EhrElement {
         return html`
         <div class="base">
             <sl-input label=${ifDefined(this.label)} type="number" @sl-input=${this.handleInput}></sl-input>
-            <sl-select placeholder="Select units" .value=${this.data?.unit ?? ''} @sl-change=${this.handleSelect}>
+            <sl-select placeholder="Select units" .value=${this.data?.unit ?? '' } @sl-change=${this.handleSelect}>
                 ${this.units.map(unit => html`<sl-menu-item value=${unit.unit}>${unit.label}</sl-menu-item>`)}
             </sl-select>
             <slot style="display: none" @slotchange=${this.handleChildChange}></slot>
