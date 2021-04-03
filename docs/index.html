@@ -20,20 +20,62 @@
           <div class="columns">
             <div class="column is-half">
               <div class="field">
-                <mb-search path="hello world" label="Disease" :filters.prop="[{name: 'Diseases', filter: '<12345'}]">
+                <mb-search path="hello world" label="Disease">
+                  <mb-filter filter="^12345" name="Some filter"></mb-filter>
+                  <mb-filter filter="<<234" name="Another filter" disabled></mb-filter>
                 </mb-search>
               </div>
               <div class="field">
                 <mb-search path="another" label="Body part"></mb-search>
               </div>
               <div class="field">
-                <mb-input path="textinput" label="Please enter your name" @input="disease=$event.target.data"
+                <mb-input textarea path="textinput" label="Please enter your name" @input="disease=$event.target.data"
                   :data.prop="disease"></mb-input>
               </div>
               <div class="field">
-                <mb-select path="selectInput" label="Select something">
-                  <mb-option value="123">Hello there</mb-option>
+                <mb-select path="selectInput" label="Select something" terminology="SNOMED-CT">
+                  <mb-option code="123" display="Hello there"></mb-option>
                 </mb-select>
+              </div>
+              <div class="field">
+                <mb-quantity label="Weight" default="kg" path="blood_pressure_template/body_weight/any_event:0/weight">
+                  <mb-unit unit="kg" label="kg"></mb-unit>
+                  <mb-unit unit="mm[H2o]" label="h2o"></mb-unit>
+                </mb-quantity>
+                <mb-quantity path="blood_pressure_template/body_weight/any_event:0/weight" default="kg" label="Weight"> 
+                  <mb-unit unit="kg" label="kg"></mb-unit>
+                  <mb-unit unit="kg" label="kg"></mb-unit>
+                  <mb-unit unit="kg" label="kg"></mb-unit>
+                  <mb-unit unit="kg" label="kg"></mb-unit>
+
+                </mb-quantity>
+              </div>
+              <div class="field">
+                <mb-buttons>
+
+                </mb-buttons>
+              </div>
+              <div class="field">
+                <mb-quantity path="blood_pressure_template/body_weight/any_event:0/weight" default="kg" label="Weight"> 
+                  <mb-unit unit="kg" label="kg"></mb-unit>
+                  <mb-unit unit="kg" label="kg"></mb-unit>
+                </mb-quantity>
+                <mb-quantity path="blood_pressure_template/body_weight/any_event:0/weight" default="kg" label="Weight"> 
+                  <mb-unit unit="kg" label="kg"></mb-unit>
+                </mb-quantity>
+              </div>
+
+              </mb-quantity>
+              <div class="field">
+                <mb-buttons multiple>
+
+                </mb-buttons>
+              </div>
+
+              <div class="field">
+                <mb-ordinal multiple>
+
+                </mb-ordinal>
               </div>
             </div>
           </div>

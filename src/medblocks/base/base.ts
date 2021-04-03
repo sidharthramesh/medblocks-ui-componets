@@ -1,5 +1,5 @@
 import { LitElement, property } from "lit-element";
-import { EventEmitter } from "../../internal/decorators";
+import { EventEmitter, watch } from "../../internal/decorators";
 
 export abstract class EhrElement extends LitElement {
     @property({ type: String }) path: string
@@ -8,9 +8,10 @@ export abstract class EhrElement extends LitElement {
 
     abstract data: any
 
-    abstract handleDataChange(): void
-
     abstract input: EventEmitter<any>
 
-
+    @watch('data')
+    handleDataChange() {
+        this.input.emit()
+    }
 }

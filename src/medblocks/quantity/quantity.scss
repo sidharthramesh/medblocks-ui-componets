@@ -1,0 +1,13 @@
+.base {
+    display: flex;
+    gap: var(--sl-spacing-x-small);
+    align-items: flex-end;
+}
+
+sl-input {
+    flex: 3;
+}
+
+sl-select {
+    flex: 2;
+}

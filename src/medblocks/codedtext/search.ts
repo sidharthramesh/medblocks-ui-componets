@@ -3,9 +3,9 @@ import { SlInput } from '../../shoelace';
 import { until } from 'lit-html/directives/until.js';
 import { classMap } from 'lit-html/directives/class-map';
 import styles from 'sass:./search.scss';
-import { watch } from '../../internal/decorators';
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { CodedTextElement } from './base';
+import MbFilter from './filter';
 
 
 
@@ -16,14 +16,9 @@ export default class MbSearch extends CodedTextElement {
 
   @property({ type: String }) searchTerm: string;
 
-  @property({ type: Array }) filters: { name: string; filter: string }[];
+  @property({ type: Array }) filters: MbFilter[];
 
   @property({ type: Array }) cancelledFilters: string[] = [];
-
-  @watch('data')
-  handleDataChange() {
-    this.input.emit();
-  }
 
   handleInput(e: CustomEvent) {
     const inputElement = e.target as SlInput;
@@ -36,6 +31,12 @@ export default class MbSearch extends CodedTextElement {
     return html`
       <sl-menu-item value="option1" .label=${'Option 1'} .terminology=${this.terminology}
         >Cataract posterior subcapsular
+      </sl-menu-item>
+      <sl-menu-item value="option1" .label=${'Option 1'} .terminology=${this.terminology}
+        >Cataract anterior polar
+      </sl-menu-item>
+      <sl-menu-item value="option1" .label=${'Option 1'} .terminology=${this.terminology}
+        >Cataract posterior polar
       </sl-menu-item>
     `;
   }
@@ -59,6 +60,18 @@ export default class MbSearch extends CodedTextElement {
     this.input.emit();
   }
 
+  connectedCallback(){
+    super.connectedCallback()
+    const observer = new MutationObserver(()=>{
+      this.handleChildChange()
+    })
+    observer.observe(this, {childList: true, subtree: true, attributes: true})
+  }
+  
+  handleChildChange(){
+    this.filters = [...this.querySelectorAll('mb-filter') as NodeListOf<MbFilter>]
+  }
+  
   handleClear() {
     this.data = undefined;
     this.input.emit();
@@ -105,13 +118,12 @@ export default class MbSearch extends CodedTextElement {
                 ${this.filters?.length > 0
                   ? html`<div class="tags">
                       ${this.filters
-                        .filter(f => !this.cancelledFilters.includes(f.filter))
                         .map(
                           f =>
                             html`<sl-tag
-                              size="small"
-                              @sl-clear=${() => (this.cancelledFilters = [...this.cancelledFilters, f.filter])}
-                              clearable
+                              size="medium"
+                              type=${f.disabled ? "info" : "primary"}
+                              @click=${()=>{f.disabled = !f.disabled}}
                               pill
                               >${f.name}</sl-tag
                             >`
@@ -121,6 +133,7 @@ export default class MbSearch extends CodedTextElement {
               </sl-menu>
             `}
       </sl-dropdown>
+      <slot @slotchange=${this.handleChildChange}></slot>
     `;
   }
 }

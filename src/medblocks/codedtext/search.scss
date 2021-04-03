@@ -10,3 +10,11 @@ sl-input.pointer::part(base) {
 .tags {
   padding: var(--sl-spacing-xx-small) var(--sl-spacing-x-large);
 }
+
+.tags sl-tag {
+  padding: var(--sl-spacing-xx-small);
+}
+
+sl-tag::part(base){
+  cursor: pointer;
+}

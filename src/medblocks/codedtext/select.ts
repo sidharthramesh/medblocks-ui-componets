@@ -1,16 +1,12 @@
 import { customElement, internalProperty, property } from "lit-element";
 import { html } from "lit-html";
 import { ifDefined } from "lit-html/directives/if-defined";
-import { watch } from "../../internal/decorators";
 import { CodedTextElement } from "./base";
 import { MbOption, SlSelect } from "../../shoelace"
 @customElement('mb-select')
 export default class MbSelect extends CodedTextElement {
 
-    @watch('data')
-    handleDataChange() {
 
-    }
 
     @property({ type: String }) terminology: string
 
@@ -19,7 +15,7 @@ export default class MbSelect extends CodedTextElement {
     @internalProperty() options: MbOption[] = []
 
     getLabel(code: string) {
-        return this.options.filter(option => option.value === code)[0].innerHTML
+        return this.options.filter(option => option.code === code)[0].display
     }
 
     get optionElements(): NodeListOf<MbOption> {
@@ -39,7 +35,7 @@ export default class MbSelect extends CodedTextElement {
         const observer = new MutationObserver(() => {
             this.handleChildChange()
         });
-        observer.observe(this, { childList: true, subtree: true });
+        observer.observe(this, { childList: true });
     }
 
     handleChildChange() {
@@ -50,7 +46,7 @@ export default class MbSelect extends CodedTextElement {
         return html`
             <sl-select clearable placeholder=${this.placeholder ?? 'Please select' } label=${ifDefined(this.label)}
                 @sl-change=${this.handleInput} @sl-clear=${() => { this.data = undefined; this.input.emit() }}>
-                ${this.options.map(option => html`<sl-menu-item value=${option.value}>${option.innerHTML}
+                ${this.options.map(option => html`<sl-menu-item value=${option.code}>${option.display}
                 </sl-menu-item>`)}
             </sl-select>
             <slot @slotchange=${this.handleChildChange}></slot>

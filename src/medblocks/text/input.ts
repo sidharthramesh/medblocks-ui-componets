@@ -1,5 +1,5 @@
 import { customElement, html, property } from "lit-element";
-import { event, EventEmitter, watch } from "../../internal/decorators";
+import { event, EventEmitter } from "../../internal/decorators";
 import { SlInput } from "../../shoelace";
 import { EhrElement } from "../base/base";
 
@@ -14,11 +14,6 @@ export default class MbInput extends EhrElement {
 
     @event('input')
     input: EventEmitter<string>
-
-    @watch('data')
-    handleDataChange() {
-
-    }
 
     handleInput(e: CustomEvent) {
         const inputElement = e.target as SlInput
