@@ -55,3 +55,4 @@ export { default as MbForm } from './medblocks/form/form';
 export { default as MbInput } from './medblocks/text/input'
 export { default as MbQuantity } from './medblocks/quantity/quantity'
 export { default as MbUnit } from './medblocks/quantity/unit'
+export { default as MbContext } from './medblocks/context/context'

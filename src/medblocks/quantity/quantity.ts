@@ -28,10 +28,12 @@ export default class MbQuantity extends EhrElement {
             this.handleChildChange()
         })
         observer.observe(this, { attributes: true, childList: true })
-        if (this.default) {
-            this.data = { ...this.data, unit: this.default }
-            this.input.emit()
-        }
+        setTimeout(() => {
+            if (this.default) {
+                this.data = { ...this.data, unit: this.default }
+                this.input.emit()
+            }
+        }, 50)
     }
 
     handleInput(e: CustomEvent) {
@@ -47,7 +49,8 @@ export default class MbQuantity extends EhrElement {
     render() {
         return html`
         <div class="base">
-            <sl-input label=${ifDefined(this.label)} type="number" @sl-input=${this.handleInput}></sl-input>
+            <sl-input label=${ifDefined(this.label)} type="number" @sl-input=${this.handleInput}
+                .value=${this.data?.magnitude?.toString() || '' }></sl-input>
             <sl-select placeholder="Select units" .value=${this.data?.unit ?? '' } @sl-change=${this.handleSelect}>
                 ${this.units.map(unit => html`<sl-menu-item value=${unit.unit}>${unit.label}</sl-menu-item>`)}
             </sl-select>

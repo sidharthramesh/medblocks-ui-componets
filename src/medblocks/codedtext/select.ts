@@ -6,8 +6,6 @@ import { MbOption, SlSelect } from "../../shoelace"
 @customElement('mb-select')
 export default class MbSelect extends CodedTextElement {
 
-
-
     @property({ type: String }) terminology: string
 
     @property({ type: String, reflect: true }) placeholder: string
@@ -26,7 +24,7 @@ export default class MbSelect extends CodedTextElement {
         const select = e.target as SlSelect
         if (select.value && typeof select.value === 'string') {
             console.log(e)
-            this.data = { code: select.value, display: this.getLabel(select.value), terminology: this.terminology }
+            this.data = { code: select.value, value: this.getLabel(select.value), terminology: this.terminology }
             this.input.emit()
         }
     }
@@ -44,9 +42,10 @@ export default class MbSelect extends CodedTextElement {
 
     render() {
         return html`
-            <sl-select clearable placeholder=${this.placeholder ?? 'Please select' } label=${ifDefined(this.label)}
-                @sl-change=${this.handleInput} @sl-clear=${() => { this.data = undefined; this.input.emit() }}>
-                ${this.options.map(option => html`<sl-menu-item value=${option.code}>${option.display}
+            <sl-select clearable placeholder=${this.placeholder ?? 'Please select'} label=${ifDefined(this.label)}
+                @sl-change=${this.handleInput} @sl-clear=${()=> { this.data = undefined; this.input.emit() }}
+                .value=${this.data?.code || ''}>
+                ${this.options.map(option => html`<sl-menu-item .value=${option.code}>${option.display}
                 </sl-menu-item>`)}
             </sl-select>
             <slot @slotchange=${this.handleChildChange}></slot>

@@ -4,7 +4,7 @@ import { EhrElement } from "../base/base";
 
 interface CodedText {
     code: string;
-    display: string;
+    value: string;
     terminology: string;
 }
 

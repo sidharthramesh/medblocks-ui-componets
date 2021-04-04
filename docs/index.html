@@ -9,29 +9,35 @@
   <link rel="stylesheet" href="/dist/themes/base.css" />
   <script type="module" src="/dist/shoelace.js"></script>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" />
+  <style>
+    *,
+    ::after,
+    ::before {
+      box-sizing: revert;
+    }
+  </style>
 </head>
 
 <body>
   <div id="vueapp">
-    <mb-form @input="handleChange" :data.prop="composition">
+    <mb-form @input="composition = $event.target.data" :data.prop="composition" :context.prop="context">
       <section class="section">
         <div class="container">
           <div class="columns">
             <div class="column is-half">
               <h1 class="subtitle">Blood pressure Template</h1>
               <div class="field">
-                <mb-quantity path="blood_pressure_template/blood_pressure:0/any_event:0/systolic" default="mm[Hg]"
-                  label="Systolic">
+                <mb-quantity path="bloodpressureexample/blood_pressure/any_event:0/systolic" label="Systolic" default="mm[Hg]">
                   <mb-unit unit="mm[Hg]" label="mm[Hg]"></mb-unit>
                 </mb-quantity>
               </div>
               <div class="field">
-                <mb-quantity path="blood_pressure_template/blood_pressure:0/any_event:0/diastolic" default="mm[Hg]"
-                  label="Diastolic">
+                <mb-quantity path="bloodpressureexample/blood_pressure/any_event:0/diastolic" label="Diastolic" default="mm[Hg]">
                   <mb-unit unit="mm[Hg]" label="mm[Hg]"></mb-unit>
+                </mb-quantity>
               </div>
               <div class="field">
-                <mb-select path="blood_pressure_template/blood_pressure:0/any_event:0/position" label="Position">
+                <mb-select path="bloodpressureexample/blood_pressure/any_event:0/position" label="Position">
                   <mb-option code="at1000" display="Standing"></mb-option>
                   <mb-option code="at1001" display="Sitting"></mb-option>
                   <mb-option code="at1002" display="Reclining"></mb-option>
@@ -39,36 +45,55 @@
                   <mb-option code="at1014" display="Lying with tilt to left"></mb-option>
                 </mb-select>
               </div>
+              <mb-context path=bloodpressureexample/context/start_time></mb-context>
+              <mb-context path=bloodpressureexample/context/setting></mb-context>
+              <mb-context path=bloodpressureexample/blood_pressure/any_event:0/time></mb-context>
+              <mb-context path=bloodpressureexample/blood_pressure/language></mb-context>
+              <mb-context path=bloodpressureexample/blood_pressure/encoding></mb-context>
+              <mb-context path=bloodpressureexample/category></mb-context>
+              <mb-context path=bloodpressureexample/language></mb-context>
+              <mb-context path=bloodpressureexample/territory></mb-context>
+              <mb-context path=bloodpressureexample/composer></mb-context>
+              <div class="field">
+                <sl-button @click="handleSubmit">Submit</sl-button>
+              </div>
             </div>
           </div>
         </div>
       </section>
     </mb-form>
-    <pre>
-      Composition:
-      {{composition}}
-
-      Systolic:
-      {{systolic}}
-    </pre>
+    <pre>{{composition}}</pre>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
   <script>
-    Vue.config.ignoredElements = [/mb-\w*/];
+    Vue.config.ignoredElements = [/mb|sl-\w*/];
     var app = new Vue({
       el: "#vueapp",
       data: {
         composition: {},
         systolic: 0,
+
+        context: {
+          "ctx/time": new Date().toISOString(),
+          "ctx/language": "en",
+          "ctx/territory": "IN",
+          "ctx/composer_name": "Sidharth Ramesh"
+        }
       },
       methods: {
         handleChange(e) {
           this.composition = e.target.data
+        },
+        handleSubmit() {
+
         }
       },
       mounted() {
-        const data = document.querySelector('mb-form').data
-        this.composition = data
+        // const data = document.querySelector('mb-form').data
+        // this.composition = data
+        this.systolic = {
+          "magnitude": 140
+        }
       }
     })
   </script>

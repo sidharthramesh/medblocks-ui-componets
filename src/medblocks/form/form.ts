@@ -1,9 +1,12 @@
-import { customElement, html, LitElement, property } from 'lit-element';
+import { customElement, html, LitElement, property, unsafeCSS } from 'lit-element';
 import { event, EventEmitter, watch } from '../../internal/decorators';
 import { EhrElement } from '../base/base';
+import styles from 'sass:./form.scss';
+
 
 @customElement('mb-form')
 export default class MedblockForm extends LitElement {
+  static styles = unsafeCSS(styles)
   @property({ type: String }) selector: string = '[path]';
 
   @property({ type: Object }) data: { [path: string]: any };
@@ -18,6 +21,20 @@ export default class MedblockForm extends LitElement {
         element.data = newValue[path];
       });
     }
+  }
+
+  serialize() {
+    const data = this.data
+    const newData: any = {}
+    Object.keys(data).forEach(path => {
+      if (typeof data[path] === 'object') {
+        const obj = data[path]
+        Object.keys(obj).forEach(frag => {
+          newData[`${path}|${frag}`] = obj[frag]
+        })
+      }
+    })
+    return newData
   }
 
   get selectedNodes(): NodeListOf<HTMLElement> {

@@ -53,7 +53,7 @@ export default class MbSearch extends CodedTextElement {
   handleSelect(e: CustomEvent) {
     const menuItem = e.detail.item;
     this.data = {
-      display: menuItem.label,
+      value: menuItem.label,
       code: menuItem.value,
       terminology: menuItem.terminology
     };
@@ -78,11 +78,11 @@ export default class MbSearch extends CodedTextElement {
   }
 
   get hasValue() {
-    return this?.data?.display && this?.data?.code ? true : false;
+    return this?.data?.value && this?.data?.code ? true : false;
   }
 
   get display() {
-    return this.hasValue ? this.data?.display : undefined;
+    return this.hasValue ? this.data?.value : undefined;
   }
 
   get code() {
