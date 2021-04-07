@@ -1,85 +1,102 @@
 <!DOCTYPE html>
 <html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Shoelace: A forward-thinking library of web components.</title>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+    <meta
+      name="description"
+      content="Shoelace provides a collection of professionally designed, every day UI components built on a framework-agnostic technology."
+    />
+    <meta
+      name="viewport"
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+    />
+    <meta property="og:title" content="Shoelace" />
+    <meta
+      property="og:description"
+      content="Shoelace provides a collection of professionally designed, every day UI components built on a framework-agnostic technology."
+    />
+    <meta property="og:type" content="website" />
+    <meta property="og:url" content="https://shoelace.style/" />
+    <meta property="og:image" content="https://shoelace.style/assets/images/og-image.png" />
 
-<head>
-  <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Medblocks UI Demo</title>
-  <link rel="stylesheet" href="/dist/themes/base.css" />
-  <script type="module" src="/dist/shoelace.js"></script>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@0.9.1/css/bulma.min.css" />
-  <style>
-    *,
-    ::after,
-    ::before {
-      box-sizing: revert;
-    }
-  </style>
-</head>
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@shoelace_style" />
+    <meta name="twitter:creator" content="@claviska" />
+    <meta name="twitter:title" content="Shoelace" />
+    <meta
+      name="twitter:description"
+      content="Shoelace provides a collection of professionally designed, every day UI components built on a framework-agnostic technology."
+    />
+    <meta name="twitter:image" content="https://shoelace.style/assets/images/twitter-card.png" />
 
-<body>
-  <div id="vueapp">
-    <mb-form @input="composition = $event.target.data" :data.prop="composition" :ctx.prop="context" :uid="uid"
-    :template="template" :ehr="ehr" :axios.prop="axios" ref="form" @submit="submit" @load="load">
-    <section class="section">
-      <div class="container">
-            <h1 class="subtitle">{{uid}}</h1>
-            <div class="columns">
-              <div class="column is-half">
-                <h1 class="subtitle">Blood pressure Template</h1>
-                <div class="columns">
-                  <div class="column">
-                    <mb-quantity path="bloodpressureexample/blood_pressure/any_event:0/systolic" label="Systolic"
-                      default="mm[Hg]">
-                      <mb-unit unit="mm[Hg]" label="mm[Hg]"></mb-unit>
-                    </mb-quantity>
-                  </div>
-                  <div class="column">
-                    <mb-quantity path="bloodpressureexample/blood_pressure/any_event:0/diastolic" label="Diastolic"
-                      default="mm[Hg]">
-                      <mb-unit unit="mm[Hg]" label="mm[Hg]"></mb-unit>
-                    </mb-quantity>
-                  </div>
-                </div>
-                <div class="field">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/docsify@4/themes/pure.css" />
+    <link rel="stylesheet" href="/assets/styles/docs.css" />
+    <link rel="stylesheet" href="/assets/styles/docs-dark.css" />
+    <link rel="stylesheet" href="/assets/styles/demos.css" />
+    <link rel="stylesheet" href="/assets/plugins/code-block/code-block.css" />
+    <link rel="stylesheet" href="/assets/plugins/theme/theme.css" />
+    <link rel="icon" href="/assets/images/logo.svg" type="image/x-icon" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/assets/images/touch-icon.png" />
 
-                </div>
-                
-                <div class="field">
-                  <mb-select path="bloodpressureexample/blood_pressure/any_event:0/position" label="Position">
-                    <mb-option code="at1000" display="Standing"></mb-option>
-                    <mb-option code="at1001" display="Sitting"></mb-option>
-                    <mb-option code="at1002" display="Reclining"></mb-option>
-                    <mb-option code="at1003" display="Lying"></mb-option>
-                    <mb-option code="at1014" display="Lying with tilt to left"></mb-option>
-                  </mb-select>
-                </div>
-                <div class="field">
-                  <mb-input textarea path="bloodpressureexample/blood_pressure/any_event:0/confounding_factors" label="Confounding factors"></mb-input>
-                </div>
-                <mb-context path=bloodpressureexample/context/start_time></mb-context>
-                <mb-context path=bloodpressureexample/context/setting></mb-context>
-                <mb-context path=bloodpressureexample/blood_pressure/any_event:0/time></mb-context>
-                <mb-context path=bloodpressureexample/blood_pressure/language></mb-context>
-                <mb-context path=bloodpressureexample/blood_pressure/encoding></mb-context>
-                <mb-context path=bloodpressureexample/category></mb-context>
-                <mb-context path=bloodpressureexample/language></mb-context>
-                <mb-context path=bloodpressureexample/territory></mb-context>
-                <mb-context path=bloodpressureexample/composer></mb-context>
-                <div class="field">
-                  <mb-submit type="primary" :loading="loading">Submit</mb-submit>
-                </div>
-              </div>
-            </div>
-          </div>
-        </section>
-      </mb-form>
-    <pre>{{composition}}</pre>
-  </div>
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-  <script src="https://cdn.jsdelivr.net/npm/vue@2.6.12/dist/vue.js"></script>
-  <script src="./script.js"></script>
-</body>
-
+    <!-- Import Shoelace -->
+    <link rel="stylesheet" href="/dist/themes/base.css" />
+    <link rel="stylesheet" href="/dist/themes/dark.css" />
+    <script type="module" src="/dist/shoelace.js"></script>
+  </head>
+  <body>
+    <div id="app"></div>
+    <script>
+      window.$docsify = {
+        alias: {
+          '/.*/_sidebar.md': '/_sidebar.md'
+        },
+        auto2top: true,
+        copyCode: {
+          buttonText: 'Copy Code',
+          errorText: 'Failed to copy',
+          successText: 'Copied'
+        },
+        coverpage: false,
+        executeScript: true,
+        ga: 'UA-6412891-16',
+        homepage: '/getting-started/overview.md',
+        loadSidebar: true,
+        logo: '/assets/images/wordmark.svg',
+        maxLevel: 3,
+        subMaxLevel: 2,
+        name: 'Shoelace',
+        notFoundPage: '404.md',
+        pagination: {
+          previousText: 'Previous',
+          nextText: 'Next',
+          crossChapter: true,
+          crossChapterText: false
+        },
+        routerMode: location.port ? 'hash' : 'history',
+        search: {
+          maxAge: 86400000, // Expiration time, the default one day
+          paths: 'auto',
+          placeholder: 'Search',
+          noData: 'No Results',
+          depth: 3,
+          namespace: 'shoelace-docs'
+        },
+        themeColor: '#049dff'
+      };
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify@4/lib/plugins/ga.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify-copy-code@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/docsify-pagination@2/dist/docsify-pagination.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/components/prism-bash.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/prismjs@1.19.0/components/prism-jsx.min.js"></script>
+    <script src="/assets/plugins/code-block/code-block.js"></script>
+    <script src="/assets/plugins/scroll-position/scroll-position.js"></script>
+    <script src="/assets/plugins/metadata/metadata.js"></script>
+    <script src="/assets/plugins/sidebar/sidebar.js"></script>
+    <script src="/assets/plugins/theme/theme.js"></script>
+  </body>
 </html>
