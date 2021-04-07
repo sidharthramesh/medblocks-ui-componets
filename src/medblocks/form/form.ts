@@ -2,6 +2,11 @@ import { customElement, html, LitElement, property, unsafeCSS } from 'lit-elemen
 import { event, EventEmitter, watch } from '../../internal/decorators';
 import { EhrElement } from '../base/base';
 import styles from 'sass:./form.scss';
+import MbContext from '../context/context';
+import { Ctx, Data, defaultContextData, fromFlat, toFlat } from './utils';
+import { AxiosInstance } from 'axios';
+import { MbSubmit } from '../../shoelace';
+
 
 
 @customElement('mb-form')
@@ -9,12 +14,44 @@ export default class MedblockForm extends LitElement {
   static styles = unsafeCSS(styles)
   @property({ type: String }) selector: string = '[path]';
 
-  @property({ type: Object }) data: { [path: string]: any };
+  @property({ type: Object }) data: Data;
+
+  @property({ type: Object }) ctx: Ctx
+
+  @property({ type: Boolean, reflect: true }) overwritectx: boolean = false
 
   @event('input') input: EventEmitter<any>;
 
+  @event('load') load: EventEmitter<any>;
+
+  @property({ type: Object }) axios: AxiosInstance
+
+  @property({ type: String, reflect: true }) uid: string
+
+  @property({ type: String, reflect: true }) template: string
+
+  @property({ type: String, reflect: true }) ehr: string
+
+  async getComposition() {
+    const r = await this.axios.get(`/composition/${this.uid}`, { params: { format: 'FLAT' } })
+    const composition = r?.data?.composition
+    const data = fromFlat(composition)
+    return data
+
+  }
+
+  async postComposition(flat: Data) {
+    const r = await this.axios.post(`/composition`, flat, { params: { format: 'FLAT', templateId: this.template, ehrId: this.ehr } })
+    return r?.data?.compositionUid
+  }
+
+  async putComposition(flat: Data) {
+    const r = await this.axios.put(`/composition/${this.uid}`, flat, { params: { format: 'FLAT', templateId: this.template } })
+    return r?.data?.compositionUid
+  }
+
   @watch('data')
-  testChanged(oldValue: any, newValue: any) {
+  handleDataChange(oldValue: any, newValue: any) {
     if (oldValue !== newValue) {
       Object.keys(this.pathElementMap).forEach(path => {
         let element = this.pathElementMap[path] as EhrElement;
@@ -23,18 +60,26 @@ export default class MedblockForm extends LitElement {
     }
   }
 
-  serialize() {
-    const data = this.data
-    const newData: any = {}
-    Object.keys(data).forEach(path => {
-      if (typeof data[path] === 'object') {
-        const obj = data[path]
-        Object.keys(obj).forEach(frag => {
-          newData[`${path}|${frag}`] = obj[frag]
-        })
-      }
-    })
-    return newData
+  @event('submit') submit: EventEmitter<any>
+  async handleSubmit() {
+    this.insertContext()
+    await 0
+    const data = toFlat(this.data)
+    this.submit.emit({ detail: data, cancelable: true })
+  }
+
+  insertContext() {
+    Object.values(this.pathElementMap)
+      .filter((element: MbContext) => !!element.autocontext)
+      .forEach((element: MbContext) => {
+        const path = element.path
+        const contextData = this.overwritectx ? defaultContextData(path, this.ctx) : element.data ?? defaultContextData(path, this.ctx)
+        element.data = contextData
+      })
+  }
+
+  get submitButton(): MbSubmit | null {
+    return this.querySelector('mb-submit')
   }
 
   get selectedNodes(): NodeListOf<HTMLElement> {
@@ -84,7 +129,10 @@ export default class MedblockForm extends LitElement {
     observer.observe(this, { childList: true, subtree: true });
   }
 
+  firstUpdated() {
+    this.load.emit({ composed: true })
+  }
   render() {
-    return html`<slot @slotchange=${this.handleSlotChange} @input=${this.handleInput}></slot>`;
+    return html`<slot @slotchange=${this.handleSlotChange} @input=${this.handleInput} @mb-submit=${this.handleSubmit}></slot>`;
   }
 }
