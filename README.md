@@ -1,4 +1,4 @@
-# Shoelace
+# Medblocks UI - From Shoelace
 
 A forward-thinking library of web components.
 

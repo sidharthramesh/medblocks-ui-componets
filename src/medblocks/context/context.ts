@@ -11,6 +11,8 @@ export default class MbContext extends EhrElement {
     @event('input')
     input: EventEmitter<any>
 
+    @property({ type: Boolean })
+    autocontext: boolean = true
 
     connectedCallback() {
         super.connectedCallback()
