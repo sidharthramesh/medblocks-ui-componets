@@ -1,7 +1,7 @@
 {
   "name": "medblocks-ui",
   "description": "Web component library for openEHR",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "homepage": "https://github.com/sidharthramesh/medblocks-ui-componets",
   "author": "Sidharth Ramesh",
   "license": "MIT",
