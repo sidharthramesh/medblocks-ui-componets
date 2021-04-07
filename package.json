@@ -26,7 +26,8 @@
   "scripts": {
     "start": "node scripts/build.cjs --dev",
     "build": "node scripts/build.cjs",
-    "prepublish": "standard-version && npm run build",
+    "prepublish": "npm run build",
+    "bump": "standard-version",
     "prettier": "prettier --write --loglevel warn ."
   },
   "dependencies": {

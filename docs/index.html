@@ -45,6 +45,7 @@
                 <div class="field">
 
                 </div>
+                
                 <div class="field">
                   <mb-select path="bloodpressureexample/blood_pressure/any_event:0/position" label="Position">
                     <mb-option code="at1000" display="Standing"></mb-option>
@@ -53,6 +54,9 @@
                     <mb-option code="at1003" display="Lying"></mb-option>
                     <mb-option code="at1014" display="Lying with tilt to left"></mb-option>
                   </mb-select>
+                </div>
+                <div class="field">
+                  <mb-input textarea path="bloodpressureexample/blood_pressure/any_event:0/confounding_factors" label="Confounding factors"></mb-input>
                 </div>
                 <mb-context path=bloodpressureexample/context/start_time></mb-context>
                 <mb-context path=bloodpressureexample/context/setting></mb-context>
