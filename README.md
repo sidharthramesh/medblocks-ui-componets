@@ -5,8 +5,8 @@
 Include these scripts in your HTML file
 
 ```html
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/medblocks-ui@0.0.7/dist/themes/base.css">
-<script type="module" src="https://cdn.jsdelivr.net/npm/medblocks-ui@0.0.7/dist/shoelace.js"></script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/medblocks-ui@0.0.9/dist/themes/base.css">
+<script type="module" src="https://cdn.jsdelivr.net/npm/medblocks-ui@0.0.9/dist/shoelace.js"></script>
 ```
 
 Get the [VSCode extension](https://marketplace.visualstudio.com/items?itemName=tornadoalert.medblocks-ui) for getting webcomponent snippets from template files.
