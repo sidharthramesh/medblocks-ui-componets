@@ -1,7 +1,7 @@
 {
   "name": "medblocks-ui",
   "description": "Web component library for openEHR",
-  "version": "0.0.7",
+  "version": "0.0.8",
   "homepage": "https://github.com/sidharthramesh/medblocks-ui-componets",
   "author": "Sidharth Ramesh",
   "license": "MIT",
@@ -26,7 +26,7 @@
   "scripts": {
     "start": "node scripts/build.cjs --dev",
     "build": "node scripts/build.cjs",
-    "prepublish": "npm run build",
+    "prepublish": "standard-version && npm run build",
     "prettier": "prettier --write --loglevel warn ."
   },
   "dependencies": {
@@ -60,6 +60,7 @@
     "prettier": "^2.2.1",
     "recursive-copy": "^2.0.11",
     "sass": "^1.32.7",
+    "standard-version": "^9.2.0",
     "tiny-glob": "^0.2.8",
     "tslib": "^2.1.0",
     "typedoc": "^0.20.28",
