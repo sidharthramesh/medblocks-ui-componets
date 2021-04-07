@@ -9,7 +9,7 @@ export default class MbInput extends EhrElement {
 
     @property({ type: Boolean, reflect: true }) textarea: boolean = false
 
-    @property({ type: String }) label: string
+    @property({ type: String }) label: string = ''
 
 
     @event('input')
@@ -23,9 +23,9 @@ export default class MbInput extends EhrElement {
 
     render() {
         return this.textarea ? html`
-        <sl-textarea label=${this.label} @sl-input=${this.handleInput} value=${this.data}></sl-textarea>
+        <sl-textarea label=${this.label} @sl-input=${this.handleInput} value=${this.data || ''}></sl-textarea>
         ` : html`
-        <sl-input label=${this.label} @sl-input=${this.handleInput} value=${this.data}></sl-input>
+        <sl-input label=${this.label} @sl-input=${this.handleInput} value=${this.data || ''}></sl-input>
         `
     }
 

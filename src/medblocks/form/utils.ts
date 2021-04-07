@@ -59,26 +59,28 @@ export function defaultContextData(path: string, ctx: Ctx): any {
 export function toFlat(data: Data): Data {
     const flat: any = {}
     Object.keys(data).forEach(path => {
-      if (typeof data[path] === 'object') {
-        const obj = data[path]
-        Object.keys(obj).forEach(frag => {
-          flat[`${path}|${frag}`] = obj[frag]
-        })
-      }
+        const value = data[path]
+        if (typeof value === 'object') {
+            Object.keys(value).forEach(frag => {
+                flat[`${path}|${frag}`] = value[frag]
+            })
+        } else {
+            flat[path] = value
+        }
     })
     return flat
-  }
+}
 
 export function fromFlat(flat: Data): Data {
     let data: Data = {}
     Object.keys(flat).map(path => {
-      const value = flat[path]
-      const [subpath, frag] = path.split('|')
-      if (frag) {
-        data[subpath] = { ...data[subpath], [frag]: value }
-      } else {
-        data[subpath] = value
-      }
+        const value = flat[path]
+        const [subpath, frag] = path.split('|')
+        if (frag) {
+            data[subpath] = { ...data[subpath], [frag]: value }
+        } else {
+            data[subpath] = value
+        }
     })
     return data
-  }
+}

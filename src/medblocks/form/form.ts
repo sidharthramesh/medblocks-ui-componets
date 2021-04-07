@@ -32,12 +32,11 @@ export default class MedblockForm extends LitElement {
 
   @property({ type: String, reflect: true }) ehr: string
 
-  async getComposition() {
-    const r = await this.axios.get(`/composition/${this.uid}`, { params: { format: 'FLAT' } })
+  async getComposition(uid: string = this.uid) {
+    const r = await this.axios.get(`/composition/${uid}`, { params: { format: 'FLAT' } })
     const composition = r?.data?.composition
     const data = fromFlat(composition)
     return data
-
   }
 
   async postComposition(flat: Data) {
@@ -64,7 +63,7 @@ export default class MedblockForm extends LitElement {
   async handleSubmit() {
     this.insertContext()
     await 0
-    const data = toFlat(this.data)
+    const data = this.export()
     this.submit.emit({ detail: data, cancelable: true })
   }
 
@@ -76,6 +75,10 @@ export default class MedblockForm extends LitElement {
         const contextData = this.overwritectx ? defaultContextData(path, this.ctx) : element.data ?? defaultContextData(path, this.ctx)
         element.data = contextData
       })
+  }
+
+  export(data: Data = this.data) {
+    return toFlat(data)
   }
 
   get submitButton(): MbSubmit | null {

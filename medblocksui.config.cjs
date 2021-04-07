@@ -1,6 +1,6 @@
 const transformations = {
     'DV_QUANTITY': (n) => [{
-        name: 'mb-quantity',
+        name: 'Quantity',
         html: `<mb-quantity path="${n.path}" label="${n.name}">
                 ${n.inputs && n.inputs[1] && n.inputs[1].list ? n.inputs[1].list.map(unit => `<mb-unit unit="${unit.value}" label="${unit.label}"></mb-unit>`).join('\n') : ''}
             </mb-quantity>`
@@ -8,23 +8,28 @@ const transformations = {
     ],
     'DV_CODED_TEXT': (n) => [
         {
-            name: 'mb-select',
+            name: 'Select',
             html: `<mb-select path="${n.path}" label="${n.name || ''}">
             ${n.inputs && n.inputs[0] && n.inputs[0].list ? n.inputs[0].list.map(option => `<mb-option code="${option.value}" display="${option.label}"></mb-option>`).join('\n') : ''}
           </mb-select>`
         }
     ],
     'DV_COUNT': (n) => [
-        {
-            name: 'Count',
-            html: '<count></count>'
-        }
+        
     ],
     'DV_TEXT': (n) => [
-        { name: 'dvtext', html: '<dv-text />' }
+        { name: 'Input', html: `<mb-input path="${n.path}" label="${n.name || ''}"></mb-input>` },
+        { name: 'Textarea', html: `<mb-input textarea path="${n.path}" label="${n.name || ''}"></mb-input>` }
+    ],
+    'DV_DATE_TIME': (n)=>[
+        {name: 'Date & Time', html: `<mb-date time path="${n.path}" label="${n.name || ''}"></mb-date>`},
+        {name: 'Date', html: `<mb-date path="${n.path}" label="${n.name || ''}"></mb-date>`}
+    ],
+    'DV_DATE': (n)=>[
+        {name: 'Date', html: `<mb-date path="${n.path}" label="${n.name || ''}"></mb-date>`},
     ],
     'context': (n) => [
-        { name: 'mb-context', html: `<mb-context path=${n.path} :data.prop="ctx.${n.id}"></mb-context>` }
+        { name: 'Context', html: `<mb-context path=${n.path}></mb-context>` }
     ]
 }
 
