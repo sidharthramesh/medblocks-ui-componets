@@ -1,17 +1,15 @@
-# Medblocks UI - From Shoelace
+# Medblocks UI Components
 
-A forward-thinking library of web components.
+## Installation
 
-- Works with all frameworks 🧩
-- Works with CDNs 🚛
-- Fully customizable with CSS 🎨
-- Includes an official dark theme 🌛
-- Built with accessibility in mind ♿️
-- Open source 😸
+Include these scripts in your HTML file
 
-Designed in New Hampshire by [Cory LaViska](https://twitter.com/claviska).
+```html
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/medblocks-ui@0.0.7/dist/themes/base.css">
+<script type="module" src="https://cdn.jsdelivr.net/npm/medblocks-ui@0.0.7/dist/shoelace.js"></script>
+```
 
----
+Get the [VSCode extension](https://marketplace.visualstudio.com/items?itemName=tornadoalert.medblocks-ui) for getting webcomponent snippets from template files.
 
 Documentation: [shoelace.style](https://shoelace.style)
 
