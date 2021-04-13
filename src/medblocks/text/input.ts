@@ -23,9 +23,9 @@ export default class MbInput extends EhrElement {
 
     render() {
         return this.textarea ? html`
-        <sl-textarea label=${this.label} @sl-input=${this.handleInput} value=${this.data || ''}></sl-textarea>
+        <sl-textarea label=${this.label} @sl-input=${this.handleInput} value=${this.data || '' }></sl-textarea>
         ` : html`
-        <sl-input label=${this.label} @sl-input=${this.handleInput} value=${this.data || ''}></sl-input>
+        <sl-input label=${this.label} @sl-input=${this.handleInput} value=${this.data || '' }></sl-input>
         `
     }
 

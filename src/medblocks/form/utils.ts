@@ -6,7 +6,7 @@ export interface Ctx {
 }
 export interface Data { [path: string]: any }
 
-export function defaultContextData(path: string, ctx: Ctx): any {
+export function defaultContextData(path: string, ctx: Ctx = {}): any {
     const parts = path.split('/')
     const contextId = parts[parts.length - 1]
     switch (contextId) {

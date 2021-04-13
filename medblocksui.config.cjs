@@ -15,22 +15,24 @@ const transformations = {
         }
     ],
     'DV_COUNT': (n) => [
-        
+
     ],
     'DV_TEXT': (n) => [
         { name: 'Input', html: `<mb-input path="${n.path}" label="${n.name || ''}"></mb-input>` },
         { name: 'Textarea', html: `<mb-input textarea path="${n.path}" label="${n.name || ''}"></mb-input>` }
     ],
-    'DV_DATE_TIME': (n)=>[
-        {name: 'Date & Time', html: `<mb-date time path="${n.path}" label="${n.name || ''}"></mb-date>`},
-        {name: 'Date', html: `<mb-date path="${n.path}" label="${n.name || ''}"></mb-date>`}
+    'DV_DATE_TIME': (n) => [
+        { name: 'Date & Time', html: `<mb-date time path="${n.path}" label="${n.name || ''}"></mb-date>` },
+        { name: 'Date', html: `<mb-date path="${n.path}" label="${n.name || ''}"></mb-date>` }
     ],
-    'DV_DATE': (n)=>[
-        {name: 'Date', html: `<mb-date path="${n.path}" label="${n.name || ''}"></mb-date>`},
+    'DV_DATE': (n) => [
+        { name: 'Date', html: `<mb-date path="${n.path}" label="${n.name || ''}"></mb-date>` },
     ],
     'context': (n) => [
         { name: 'Context', html: `<mb-context path=${n.path}></mb-context>` }
-    ]
+    ],
+    // 'wrapper': (html) => `<div class="field">${html}</div>`
+
 }
 
 module.exports.default = (leaf) => {
@@ -39,7 +41,12 @@ module.exports.default = (leaf) => {
     }
     const fn = transformations[leaf.rmType]
     if (fn) {
-        return fn(leaf)
+        const nodes = fn(leaf)
+        const wrapper = transformations['wrapper']
+        if (wrapper) {
+            return nodes.map(node => ({ ...node, html: wrapper(node.html) }))
+        }
+        return nodes
     }
     return []
 }

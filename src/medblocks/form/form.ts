@@ -51,6 +51,7 @@ export default class MedblockForm extends LitElement {
 
   @watch('data')
   handleDataChange(oldValue: any, newValue: any) {
+    // Check only whichever has changed. This is also slow.
     if (oldValue !== newValue) {
       Object.keys(this.pathElementMap).forEach(path => {
         let element = this.pathElementMap[path] as EhrElement;
@@ -90,6 +91,7 @@ export default class MedblockForm extends LitElement {
   }
 
   get pathElementMap(): { [path: string]: HTMLElement } {
+    // TODO: This is the slowest function. Find ways to speed it up.
     const childElements = this.selectedNodes;
     if (childElements.length === 0) {
       console.debug(`mb-template: No child elements found for selector "${this.selector}"`);
@@ -115,6 +117,7 @@ export default class MedblockForm extends LitElement {
 
   handleInput(e: CustomEvent) {
     e.stopPropagation();
+    // TODO Only handle current data for the event target. Not all. This is slow.
     this.data = this.currentData();
     this.input.emit();
   }
@@ -126,6 +129,7 @@ export default class MedblockForm extends LitElement {
   async connectedCallback() {
     super.connectedCallback();
     const observer = new MutationObserver(() => {
+      // TODO Only handle newly added/deleted nodes. Slow currently. Attribute/data change is handled by handleInput.
       this.data = this.currentData();
       this.input.emit();
     });
@@ -136,6 +140,7 @@ export default class MedblockForm extends LitElement {
     this.load.emit({ composed: true })
   }
   render() {
-    return html`<slot @slotchange=${this.handleSlotChange} @input=${this.handleInput} @mb-submit=${this.handleSubmit}></slot>`;
+    return html`<slot @slotchange=${this.handleSlotChange} @input=${this.handleInput} @mb-submit=${this.handleSubmit}></slot>
+    `;
   }
 }
