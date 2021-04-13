@@ -15,10 +15,11 @@ const path = require('path');
 const sass = require('sass');
 const sassPlugin = require('esbuild-plugin-sass');
 const { build } = require('esbuild');
-
+const rimfaf = require('rimraf')
 const { dev } = commandLineArgs({ name: 'dev', type: Boolean });
 
-execSync(`rm -rf ./dist`, { stdio: 'inherit' });
+// execSync(`rm -rf ./dist`, { stdio: 'inherit' });
+rimfaf.sync('./dist')
 if (!dev) execSync('tsc', { stdio: 'inherit' }); // for type declarations
 execSync('node scripts/make-metadata.cjs', { stdio: 'inherit' });
 execSync('node scripts/make-icons.cjs', { stdio: 'inherit' });
