@@ -1,4 +1,4 @@
-import { customElement, html, LitElement, property, unsafeCSS } from 'lit-element';
+import { customElement, html, internalProperty, LitElement, property, unsafeCSS } from 'lit-element';
 import { event, EventEmitter, watch } from '../../internal/decorators';
 import { EhrElement } from '../base/base';
 import styles from 'sass:./form.scss';
@@ -31,6 +31,8 @@ export default class MedblockForm extends LitElement {
   @property({ type: String, reflect: true }) template: string
 
   @property({ type: String, reflect: true }) ehr: string
+
+  @internalProperty() pathElementMap: { [path: string]: HTMLElement }
 
   async getComposition(uid: string = this.uid) {
     const r = await this.axios.get(`/composition/${uid}`, { params: { format: 'FLAT' } })
@@ -90,7 +92,7 @@ export default class MedblockForm extends LitElement {
     return this.querySelectorAll(this.selector);
   }
 
-  get pathElementMap(): { [path: string]: HTMLElement } {
+  currentPathElementMap(): { [path: string]: HTMLElement } {
     // TODO: This is the slowest function. Find ways to speed it up.
     const childElements = this.selectedNodes;
     if (childElements.length === 0) {
@@ -127,9 +129,16 @@ export default class MedblockForm extends LitElement {
   }
 
   async connectedCallback() {
+    // Set pathElementMap first
     super.connectedCallback();
-    const observer = new MutationObserver(() => {
+    this.pathElementMap = this.currentPathElementMap()
+    const observer = new MutationObserver((mutationsList) => {
+      mutationsList.forEach((r) => {
+        console.log(r)
+        // Add or delete pathElementMap
+      })
       // TODO Only handle newly added/deleted nodes. Slow currently. Attribute/data change is handled by handleInput.
+      // Update the path element map based on mutations
       this.data = this.currentData();
       this.input.emit();
     });
