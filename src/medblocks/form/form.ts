@@ -88,13 +88,12 @@ export default class MedblockForm extends LitElement {
     return this.querySelector('mb-submit')
   }
 
-  get selectedNodes(): NodeListOf<HTMLElement> {
-    return this.querySelectorAll(this.selector);
-  }
 
-  currentPathElementMap(): { [path: string]: HTMLElement } {
+  currentPathElementMap(el: HTMLElement): { [path: string]: HTMLElement } {
+
     // TODO: This is the slowest function. Find ways to speed it up.
-    const childElements = this.selectedNodes;
+    const selfElement = el.matches(this.selector) ? el as EhrElement : null
+    const childElements = el.querySelectorAll(this.selector);
     if (childElements.length === 0) {
       console.debug(`mb-template: No child elements found for selector "${this.selector}"`);
     }
@@ -106,6 +105,9 @@ export default class MedblockForm extends LitElement {
       }
       map = { ...map, [el.path]: el };
     });
+    if (selfElement) {
+      map = {...map, [selfElement.path]: selfElement}
+    }
     return map;
   }
 
@@ -131,12 +133,35 @@ export default class MedblockForm extends LitElement {
   async connectedCallback() {
     // Set pathElementMap first
     super.connectedCallback();
-    this.pathElementMap = this.currentPathElementMap()
-    const observer = new MutationObserver((mutationsList) => {
-      mutationsList.forEach((r) => {
-        console.log(r)
-        // Add or delete pathElementMap
-      })
+    this.pathElementMap = this.currentPathElementMap(this)
+    const observer = new MutationObserver((mutationRecord) => {
+      mutationRecord
+        .map(record => [...record.addedNodes])
+        .flat()
+        .filter(node => node.nodeType === Node.ELEMENT_NODE)
+        .map(node => this.currentPathElementMap(node as HTMLElement))
+        .forEach(pathElement => {
+          this.pathElementMap = { ...this.pathElementMap, ...pathElement }
+        })
+
+      const removedNodes = mutationRecord
+        .map(record => [...record.removedNodes])
+        .flat()
+
+      console.log(removedNodes)
+
+      removedNodes
+        .filter(node => node.nodeType === Node.ELEMENT_NODE)
+        .map(node => this.currentPathElementMap(node as HTMLElement))
+        .forEach(pathElement => {
+          const pathsToRemove = Object.keys(pathElement)
+          let newPathElementMap = { ...this.pathElementMap }
+          console.log(pathsToRemove)
+          pathsToRemove.forEach(path => {
+            delete newPathElementMap[path]
+          })
+          this.pathElementMap = newPathElementMap
+        })
       // TODO Only handle newly added/deleted nodes. Slow currently. Attribute/data change is handled by handleInput.
       // Update the path element map based on mutations
       this.data = this.currentData();

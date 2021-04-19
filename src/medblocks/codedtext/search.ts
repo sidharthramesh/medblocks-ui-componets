@@ -20,25 +20,21 @@ export default class MbSearch extends CodedTextElement {
 
   @property({ type: Array }) cancelledFilters: string[] = [];
 
+  @property({type: Array}) mock: string [] = [];
   handleInput(e: CustomEvent) {
     const inputElement = e.target as SlInput;
     this.searchTerm = inputElement.value;
     this.renderRoot.querySelector('sl-dropdown')?.show();
+    console.log("getting input")
   }
 
   async getResults() {
     await new Promise(r => setTimeout(r, 500));
-    return html`
-      <sl-menu-item value="option1" .label=${'Option 1'} .terminology=${this.terminology}
-        >Cataract posterior subcapsular
+    return this.mock.map(r=>html`
+      <sl-menu-item value=${r} .label=${r} .terminology=${this.terminology}
+        >${r}
       </sl-menu-item>
-      <sl-menu-item value="option1" .label=${'Option 1'} .terminology=${this.terminology}
-        >Cataract anterior polar
-      </sl-menu-item>
-      <sl-menu-item value="option1" .label=${'Option 1'} .terminology=${this.terminology}
-        >Cataract posterior polar
-      </sl-menu-item>
-    `;
+    `)
   }
 
   get loadingResults(): TemplateResult {
@@ -113,7 +109,7 @@ export default class MbSearch extends CodedTextElement {
         ${this.hasValue
           ? null
           : html`
-              <sl-menu style="min-width: 400px" @sl-select=${this.handleSelect}>
+              <sl-menu style="min-width: 300px" @sl-select=${this.handleSelect}>
                 ${until(this.getResults(), this.loadingResults)}
                 ${this.filters?.length > 0
                   ? html`<div class="tags">
