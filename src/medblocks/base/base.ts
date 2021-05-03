@@ -1,5 +1,5 @@
 import { LitElement, property } from 'lit-element';
-import { EventEmitter, watch } from '../../internal/decorators';
+import { event, EventEmitter, watch } from '../../internal/decorators';
 
 export default abstract class EhrElement extends LitElement {
   @property({ type: String, reflect: true }) path: string;
@@ -12,6 +12,21 @@ export default abstract class EhrElement extends LitElement {
 
   checkValidation(): boolean {
     return true;
+  }
+  @event('mb-dependency') mbDependency: EventEmitter<{key: string, value: any}>
+  
+  @event('mb-connect') mbConnect : EventEmitter<{path: string}>
+
+  @event('mb-disconnect') mbDisconnect: EventEmitter<{path: string}>
+
+  connectedCallback(){
+    super.connectedCallback()
+    this.mbConnect.emit({detail: this.path})
+  }
+
+  disconnectedCallback(){
+    super.disconnectedCallback()
+    this.mbDisconnect.emit({detail: this.path})
   }
 
   @watch('data')

@@ -44,6 +44,8 @@ export default class MedblockForm extends LitElement {
 
   @property({ type: String, reflect: true }) ehr: string;
 
+  @property({type: Object}) snomed: AxiosInstance;
+
   @property({ type: Object }) plugin: MbPlugin = openEHRPlugin;
 
   @state() pathElementMap: { [path: string]: HTMLElement } = {};
@@ -169,6 +171,7 @@ export default class MedblockForm extends LitElement {
   async connectedCallback() {
     // Set pathElementMap first
     super.connectedCallback();
+    this.addEventListener('mb-dependency', this.handleDependency)
     await 0;
     this.pathElementMap = this.currentPathElementMap(this);
     this.observer = new MutationObserver(mutationRecord => {
@@ -238,6 +241,10 @@ export default class MedblockForm extends LitElement {
     this.observer.disconnect();
   }
 
+  handleDependency(e: CustomEvent<{key: string, value: any}>){
+    console.log(this.snomed)
+    e.detail.value = this.snomed
+  }
   render() {
     return html`<slot
       @slotchange=${this.handleSlotChange}

@@ -125,6 +125,11 @@ export default class MbSearch extends CodedTextElement {
     </div>`;
   }
 
+  get parentAxios(): AxiosInstance {
+    const dependencyEvent = this.mbDependency.emit({detail: {key: 'hermes'}})
+    return dependencyEvent.detail.value
+  }
+
   async getResults() {
     if (this.debouncing) {
       return this.loadingResults;
@@ -140,8 +145,9 @@ export default class MbSearch extends CodedTextElement {
       return [];
     }
     try {
-      const response = await this.axios.get(
-        'http://localhost:9200/v1/snomed/search',
+      const axios = this.axios ? this.axios : this.parentAxios
+      const response = await axios.get(
+        '/snomed/search',
         {
           params: {
             s: this.searchTerm,
@@ -174,7 +180,7 @@ export default class MbSearch extends CodedTextElement {
         ? [...results, this.viewMore]
         : results;
     } catch (e) {
-      console.error(e);
+      // console.error(e);
       return html`
         <sl-menu-item disabled>
           <sl-icon name="exclamation-triangle" slot="prefix"></sl-icon>
