@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -9,6 +10,7 @@
     <script type="module" src="../dist/medblocks.js"></script>
     <title>Medblocks UI</title>
 </head>
+
 <body>
     <mb-form>
         <mb-search></mb-search>
@@ -16,7 +18,8 @@
     <script src="../node_modules/axios/dist/axios.min.js"></script>
     <script type="module">
         let form = document.querySelector('mb-form')
-        form.snomed = axios.create({baseURL: 'http://localhost:9200/v1'})
+        form.hermes = axios.create({ baseURL: 'http://localhost:9200/v1' })
     </script>
 </body>
+
 </html>

@@ -8,7 +8,6 @@ import {
 } from 'lit-element';
 import SlInput from '@shoelace-style/shoelace/dist/components/input/input';
 import '@shoelace-style/shoelace/dist/components/spinner/spinner';
-
 import { until } from 'lit-html/directives/until.js';
 import { classMap } from 'lit-html/directives/class-map';
 import { ifDefined } from 'lit-html/directives/if-defined';
@@ -93,8 +92,8 @@ export default class MbSearch extends CodedTextElement {
 
   get contraints() {
     const filters = this.filters
-      .filter(filter => !filter.disabled)
-      .map(filter => filter.filter);
+      ?.filter(filter => !filter.disabled)
+      ?.map(filter => filter.filter);
     if (filters?.length > 0) {
       return filters.join(' OR ');
     }
@@ -156,6 +155,7 @@ export default class MbSearch extends CodedTextElement {
           },
         }
       );
+      console.log(response)
       const results = response.data.map(
         (term: {
           id: number;
@@ -180,7 +180,7 @@ export default class MbSearch extends CodedTextElement {
         ? [...results, this.viewMore]
         : results;
     } catch (e) {
-      // console.error(e);
+      console.error(e);
       return html`
         <sl-menu-item disabled>
           <sl-icon name="exclamation-triangle" slot="prefix"></sl-icon>
