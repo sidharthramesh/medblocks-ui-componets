@@ -2,7 +2,7 @@ import {
   css,
   customElement,
   html,
-  internalProperty,
+  state,
   property,
   TemplateResult,
 } from 'lit-element';
@@ -13,8 +13,8 @@ import { classMap } from 'lit-html/directives/class-map';
 import { ifDefined } from 'lit-html/directives/if-defined';
 import { CodedTextElement } from './base';
 import MbFilter from './filter';
-import SlDropdown from '@shoelace-style/shoelace/dist/components/dropdown/dropdown';
-import '@shoelace-style/shoelace/dist/components/dropdown/dropdown';
+import './dropdown'
+import SlDropdown from './dropdown'
 import '@shoelace-style/shoelace/dist/components/menu/menu';
 import '@shoelace-style/shoelace/dist/components/icon/icon';
 import { AxiosInstance } from 'axios';
@@ -24,7 +24,7 @@ import { watch } from '../../internal/decorators';
 export default class MbSearch extends CodedTextElement {
   static styles = css`
     :host,
-    sl-dropdown {
+    mb-dropdown {
       display: block;
     }
 
@@ -64,11 +64,11 @@ export default class MbSearch extends CodedTextElement {
 
   @property({ type: Number }) hits = 10;
 
-  @internalProperty() moreHits: number = 0;
+  @state() moreHits: number = 0;
 
-  @internalProperty() debouncing: boolean = false;
+  @state() debouncing: boolean = false;
 
-  @internalProperty() debounceTimeout: number;
+  @state() debounceTimeout: number;
 
   get maxHits() {
     return this.hits + this.moreHits;
@@ -249,9 +249,11 @@ export default class MbSearch extends CodedTextElement {
     return this.hasValue ? this.data?.code : undefined;
   }
 
+
   render() {
     return html`
-      <sl-dropdown
+      <mb-dropdown
+        
         .focusKeys=${['Enter']}
         .typeToSelect=${false}
         @sl-after-hide=${() => {
@@ -300,7 +302,7 @@ export default class MbSearch extends CodedTextElement {
                   : null}
               </sl-menu>
             `}
-      </sl-dropdown>
+      </mb-dropdown>
       <slot @slotchange=${this.handleChildChange}></slot>
     `;
   }
