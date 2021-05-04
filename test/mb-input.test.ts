@@ -7,7 +7,7 @@ import {
 } from '@open-wc/testing';
 import MbInput from '../src/medblocks/text/input';
 import '../src/medblocks/text/input';
-import { SlInput } from '@shoelace-style/shoelace';
+import SlInput from '@shoelace-style/shoelace/dist/components/input/input';
 
 describe('MbInput', () => {
   let mbinput: MbInput;
