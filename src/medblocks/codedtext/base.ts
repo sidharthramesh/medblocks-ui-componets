@@ -9,7 +9,7 @@ interface CodedText {
   _type: () => 'codedtext';
 }
 
-export abstract class CodedTextElement extends EhrElement {
+export class CodedTextElement extends EhrElement {
   @property({ type: Object }) data: CodedText | undefined;
   @property({ type: String }) terminology: string = 'local';
   @event('mb-input') input: EventEmitter<CodedText>;
