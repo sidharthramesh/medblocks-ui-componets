@@ -1,6 +1,10 @@
+![medblocks ui logo](./demo/medblocks-ui.png)
+
 # Medblocks UI
 
-This library follows the [open-wc](https://github.com/open-wc/open-wc) recommendation.
+Web Components for rapid development of openEHR systems. The [automatic form generator](https://sidharthramesh.github.io/medblocks-ui/) is depreciated. The current recommended workflow is to build custom UIs based on the need using web components.
+
+[![Medblocks UI Web components demo](https://img.youtube.com/vi/ng9lkQKa2KE/0.jpg)](https://www.youtube.com/watch?v=ng9lkQKa2KE)
 
 ## Installation
 
@@ -12,44 +16,11 @@ npm i medblocks-ui
 
 ```html
 <script type="module">
+  import '@shoelace-style/shoelace/dist/themes/base.css'; //Customize this to change the theme
   import 'medblocks-ui/medblocks.js';
 </script>
 
-<example-comp></example-comp>
-```
-
-## Linting with ESLint, Prettier, and Types
-
-To scan the project for linting errors, run
-
-```bash
-npm run lint
-```
-
-You can lint with ESLint and Prettier individually as well
-
-```bash
-npm run lint:eslint
-```
-
-```bash
-npm run lint:prettier
-```
-
-To automatically fix many linting errors, run
-
-```bash
-npm run format
-```
-
-You can format using ESLint and Prettier individually as well
-
-```bash
-npm run format:eslint
-```
-
-```bash
-npm run format:prettier
+<mb-form></mb-form>
 ```
 
 ## Testing with Web Test Runner
@@ -93,3 +64,13 @@ npm start
 ```
 
 To run a local development server that serves the basic demo located in `demo/index.html`
+
+# Contribution
+
+Contributors welcome! User Interface generation is an important problem to solve in the healthcare industry. Too many times, health care professionals face burn out due bad design choices. I believe that this needs to change. I've written more about this in my blog [here](https://blog.medblocks.org/aboutme/).
+
+If you find this repository useful, fork it, use it! If you want to contribute, note the following:
+
+- This is a [Lit-Element](https://lit-element.polymer-project.org/guide) project written in typescript.
+- Most of the default components use [Shoelace](https://shoelace.style/) webcomponents. You can customize all the components the same way you [customize shoelace](https://shoelace.style/getting-started/customizing) `src/css/main.scss`.
+- For bug, or new feature requests, create an issue.

@@ -10,6 +10,8 @@
     "start": "tsc && concurrently -k -r \"tsc --watch --preserveWatchOutput\" \"wds\"",
     "build": "tsc",
     "prepublish": "tsc",
+    "docs": "wca analyze src --format json --outDir ./docs",
+    "docs:manifest": "wca analyze src --format json --outFile ./dist/custom-elements.json",
     "lint": "eslint --ext .ts,.html . --ignore-path .gitignore && prettier \"**/*.ts\" --check --ignore-path .gitignore",
     "format": "eslint --ext .ts,.html . --fix --ignore-path .gitignore && prettier \"**/*.ts\" --write --ignore-path .gitignore",
     "test": "tsc && wtr --coverage --puppeteer",
@@ -39,7 +41,8 @@
     "lint-staged": "^10.5.4",
     "prettier": "^2.2.1",
     "tslib": "^2.2.0",
-    "typescript": "^4.2.4"
+    "typescript": "^4.2.4",
+    "web-component-analyzer": "^1.1.6"
   },
   "eslintConfig": {
     "parser": "@typescript-eslint/parser",
